@@ -25,7 +25,7 @@ void AC_ON()
 	Temperature = ADC_READ(); //Variable to save temperature value
 
 	
-	if (Temperature < T_min)
+	if (Temperature < T_min) //AC_OFF
 	{
 		clear_bit(AC_PORT,AC_PIN1);
 		clear_bit(BUZZER_PORT,BUZZER_PIN);
