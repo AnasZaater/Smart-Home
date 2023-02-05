@@ -248,7 +248,8 @@ void UART_Admin_Interfacing()
 			uart_var = UART_Receive();
 		}	
 		UART_Transmit(uart_var);
-		
+		UART_Transmit('\r');
+		UART_Transmit('\r');
 		while (!((uart_var >= Ascii_1) && (uart_var <= Ascii_8)))
 		{
 			UART_Send_String ("Please Choose only from 1 to 8");

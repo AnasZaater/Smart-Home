@@ -416,7 +416,7 @@ END GROUP
 .rela.plt
  *(.rela.plt)
 
-.text           0x00000000     0x2bda
+.text           0x00000000     0x2be6
  *(.vectors)
  .vectors       0x00000000       0x54 D:/Softwares/ATML Studio/7.0/Packs/atmel/ATmega_DFP/1.2.209/gcc/dev/atmega32/avr5/crtatmega32.o
                 0x00000000                __vector_default
@@ -659,16 +659,16 @@ END GROUP
                 0x000019a6      0x25a UART_Apps.o
                 0x000019a6                UART_Rooms_Leds_Control
  .text.UART_Admin_Interfacing
-                0x00001c00      0xe00 UART_Apps.o
+                0x00001c00      0xe0c UART_Apps.o
                 0x00001c00                UART_Admin_Interfacing
  .text.UART_User_Interfacing
-                0x00002a00      0x1d6 UART_Apps.o
-                0x00002a00                UART_User_Interfacing
-                0x00002bd6                . = ALIGN (0x2)
+                0x00002a0c      0x1d6 UART_Apps.o
+                0x00002a0c                UART_User_Interfacing
+                0x00002be2                . = ALIGN (0x2)
  *(.fini9)
- .fini9         0x00002bd6        0x0 d:/softwares/atml studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/avr5\libgcc.a(_exit.o)
-                0x00002bd6                _exit
-                0x00002bd6                exit
+ .fini9         0x00002be2        0x0 d:/softwares/atml studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/avr5\libgcc.a(_exit.o)
+                0x00002be2                _exit
+                0x00002be2                exit
  *(.fini9)
  *(.fini8)
  *(.fini8)
@@ -687,11 +687,11 @@ END GROUP
  *(.fini1)
  *(.fini1)
  *(.fini0)
- .fini0         0x00002bd6        0x4 d:/softwares/atml studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/avr5\libgcc.a(_exit.o)
+ .fini0         0x00002be2        0x4 d:/softwares/atml studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/avr5\libgcc.a(_exit.o)
  *(.fini0)
-                0x00002bda                _etext = .
+                0x00002be6                _etext = .
 
-.data           0x00800060      0x75c load address 0x00002bda
+.data           0x00800060      0x75c load address 0x00002be6
                 0x00800060                PROVIDE (__data_start, .)
  *(.data)
  *(.data*)
@@ -721,8 +721,8 @@ END GROUP
  *(.bss*)
  *(COMMON)
                 0x008007bc                PROVIDE (__bss_end, .)
-                0x00002bda                __data_load_start = LOADADDR (.data)
-                0x00003336                __data_load_end = (__data_load_start + SIZEOF (.data))
+                0x00002be6                __data_load_start = LOADADDR (.data)
+                0x00003342                __data_load_end = (__data_load_start + SIZEOF (.data))
 
 .noinit         0x008007bc        0x0
                 [!provide]                PROVIDE (__noinit_start, .)
@@ -849,7 +849,7 @@ END GROUP
 .debug_pubnames
  *(.debug_pubnames)
 
-.debug_info     0x00000000     0x790b
+.debug_info     0x00000000     0x7931
  *(.debug_info .gnu.linkonce.wi.*)
  .debug_info    0x00000000      0x4e6 D:/Softwares/ATML Studio/7.0/Packs/atmel/ATmega_DFP/1.2.209/gcc/dev/atmega32/avr5/crtatmega32.o
  .debug_info    0x000004e6       0xdf AC.o
@@ -868,7 +868,7 @@ END GROUP
  .debug_info    0x000044cb       0xea Servo.o
  .debug_info    0x000045b5       0xc5 TimerFunc.o
  .debug_info    0x0000467a      0x199 UART.o
- .debug_info    0x00004813     0x30f8 UART_Apps.o
+ .debug_info    0x00004813     0x311e UART_Apps.o
 
 .debug_abbrev   0x00000000     0x1583
  *(.debug_abbrev)
@@ -891,7 +891,7 @@ END GROUP
  .debug_abbrev  0x000012bd      0x111 UART.o
  .debug_abbrev  0x000013ce      0x1b5 UART_Apps.o
 
-.debug_line     0x00000000     0x39c7
+.debug_line     0x00000000     0x39d3
  *(.debug_line .debug_line.* .debug_line_end)
  .debug_line    0x00000000      0x115 D:/Softwares/ATML Studio/7.0/Packs/atmel/ATmega_DFP/1.2.209/gcc/dev/atmega32/avr5/crtatmega32.o
  .debug_line    0x00000115      0x11b AC.o
@@ -910,7 +910,7 @@ END GROUP
  .debug_line    0x00002379       0xe8 Servo.o
  .debug_line    0x00002461      0x2df TimerFunc.o
  .debug_line    0x00002740      0x16f UART.o
- .debug_line    0x000028af     0x1118 UART_Apps.o
+ .debug_line    0x000028af     0x1124 UART_Apps.o
 
 .debug_frame    0x00000000      0x7e0
  *(.debug_frame)
@@ -932,43 +932,43 @@ END GROUP
  .debug_frame   0x0000067c       0x84 UART.o
  .debug_frame   0x00000700       0xe0 UART_Apps.o
 
-.debug_str      0x00000000      0xa2e
+.debug_str      0x00000000      0xa7e
  *(.debug_str)
  .debug_str     0x00000000      0x196 D:/Softwares/ATML Studio/7.0/Packs/atmel/ATmega_DFP/1.2.209/gcc/dev/atmega32/avr5/crtatmega32.o
  .debug_str     0x00000196      0x17f AC.o
                                 0x1b3 (size before relaxing)
  .debug_str     0x00000315       0x70 ADC.o
                                 0x1ec (size before relaxing)
- .debug_str     0x00000385      0x276 App.o
-                                0x443 (size before relaxing)
- .debug_str     0x000005fb       0xbd EEPROM.o
+ .debug_str     0x00000385      0x2c6 App.o
+                                0x43a (size before relaxing)
+ .debug_str     0x0000064b       0xbd EEPROM.o
                                 0x29e (size before relaxing)
- .debug_str     0x000006b8       0x98 EEPROM_Apps.o
-                                0x286 (size before relaxing)
- .debug_str     0x00000750       0x88 I2C_Master.o
+ .debug_str     0x00000708       0x98 EEPROM_Apps.o
+                                0x27d (size before relaxing)
+ .debug_str     0x000007a0       0x88 I2C_Master.o
                                 0x266 (size before relaxing)
- .debug_str     0x000007d8       0x17 Interrupt_Start.o
+ .debug_str     0x00000828       0x17 Interrupt_Start.o
                                 0x19a (size before relaxing)
- .debug_str     0x000007ef        0xe Keypad.o
+ .debug_str     0x0000083f        0xe Keypad.o
                                 0x1b2 (size before relaxing)
- .debug_str     0x000007fd       0x45 LCD.o
+ .debug_str     0x0000084d       0x45 LCD.o
                                 0x27a (size before relaxing)
- .debug_str     0x00000842       0xb0 LCD_Apps.o
+ .debug_str     0x00000892       0xb0 LCD_Apps.o
                                 0x30a (size before relaxing)
- .debug_str     0x000008f2       0x31 LED_Dimmer_Buzzer_Alarm.o
+ .debug_str     0x00000942       0x31 LED_Dimmer_Buzzer_Alarm.o
                                 0x23a (size before relaxing)
- .debug_str     0x00000923       0x26 main.o
-                                0x1d3 (size before relaxing)
- .debug_str     0x00000949       0x11 Sensor_ON.o
+ .debug_str     0x00000973       0x26 main.o
+                                0x1ca (size before relaxing)
+ .debug_str     0x00000999       0x11 Sensor_ON.o
                                 0x18e (size before relaxing)
- .debug_str     0x0000095a       0x1f Servo.o
+ .debug_str     0x000009aa       0x1f Servo.o
                                 0x1b7 (size before relaxing)
- .debug_str     0x00000979       0x24 TimerFunc.o
+ .debug_str     0x000009c9       0x24 TimerFunc.o
                                 0x1a7 (size before relaxing)
- .debug_str     0x0000099d       0x31 UART.o
+ .debug_str     0x000009ed       0x31 UART.o
                                 0x1ef (size before relaxing)
- .debug_str     0x000009ce       0x60 UART_Apps.o
-                                0x40b (size before relaxing)
+ .debug_str     0x00000a1e       0x60 UART_Apps.o
+                                0x402 (size before relaxing)
 
 .debug_loc      0x00000000     0x49ae
  *(.debug_loc)
