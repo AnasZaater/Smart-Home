@@ -43,6 +43,6 @@ void AC_ON()
 	{
 		clear_bit(AC_PORT,AC_PIN1);
 		AC_Alarm();		// AC led blinks and buzzer ON
-
+		// A warning may be displayed on LCD Screen
 	}
 }
