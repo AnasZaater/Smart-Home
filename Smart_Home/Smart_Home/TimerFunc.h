@@ -17,4 +17,4 @@
 #define fclk256 '4'
 #define fclk1024 '5'
 
-void Timer(char timerNum,char Mode,char COM,char Prescaler);
+void Timer(char timerNum,char Mode,char COM,char Prescaler); //This Function is used to initialize the timer anytime it's needed

@@ -24,12 +24,12 @@
 #define LED_BLINK_T 500
 
 //FUNCTIONS
-void LED_STAT(unsigned char status,unsigned char R_Num);
-void Alarm_On ();
-void DIMMER_CONTROL(unsigned char level);
-void LED_START();
-void BUZZER_START();
-void DIMMER_Init();
+void LED_STAT(unsigned char status,unsigned char R_Num); //Used to turn ON or OFF any LED
+void Alarm_On (); //Starts the alarm
+void DIMMER_CONTROL(unsigned char level); //Controls Dimmer circuit brightness level
+void LED_START(); //Sets Pins used for LED as output
+void BUZZER_START(); //Sets Pins used for LED as output
+void DIMMER_Init(); //Initialize PWM mode to control the dimmer circuit
 
 
 

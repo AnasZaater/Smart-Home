@@ -23,33 +23,33 @@
 
 
 
-ISR(INT0_vect)
+ISR(INT0_vect) // LCD and Keypad interfacing
 {
-	unsigned char Keypad_Value = 0;
-	char user_counter = 0;
-	unsigned char trials = 3;
+	unsigned char Keypad_Value = 0; //Stores pressed button
+	char user_counter = 0; //Counter stores number of users
+	unsigned char trials = 3; //allowed trials number
 	char username_arr[4];		// array filled by user interface (ADMIN/USER)
 	char password_arr[4];		// array filled by user interface (ADMIN/USER)
 	char username_temp_arr[4];	// array taken from EEPROM to compare
 	char password_temp_arr[4];	// array taken from EEPROM to compare
 	unsigned char looping_counter = 0;
-	unsigned char Compare_Var = 0;
+	unsigned char Compare_Var = 0; //variable indicates the success or failure of comparing profile entered with the one stored
 	
-	LCD_Welcome_Message();
+	LCD_Welcome_Message(); //Displays a welcome message
 	
-	EEPROM_readByte(Counters_Block,Users_LCD_number_BIT,&user_counter);
+	EEPROM_readByte(Counters_Block,Users_LCD_number_BIT,&user_counter); //Reads the number of user present NOW in the system
 	_delay_ms(10);
 	
 	trials = 3;
-	while(trials>=1 && trials<=3)
+	while(trials>=1 && trials<=3) //Looping as long as the trials are greater than or equal 1 and smaller than or equal 3
 	{
 			//-----------------	Writing the username -----------------
 			LCD_Write_String("Username : ");
 			LCD_Send_CMD(Display_ON_Cusror_ON_Blink_OFF);
 			looping_counter = 0;
-			while(looping_counter < 4)
+			while(looping_counter < 4) // To allow for writing of 4 digits
 			{
-				while(!(Keypad_Value >= Ascii_0	&& Keypad_Value <= Ascii_9))
+				while(!(Keypad_Value >= Ascii_0	&& Keypad_Value <= Ascii_9)) //Storing the written values by user
 				{
 					Keypad_Value = Keypad_Get_Value();
 				}
@@ -96,9 +96,9 @@ ISR(INT0_vect)
 			_delay_ms(500);
 			LCD_Clear_Screen();
 			looping_counter = 0;
-		for (looping_counter = 0; looping_counter < user_counter; looping_counter++)
+		for (looping_counter = 0; looping_counter < user_counter; looping_counter++) //Reads the users using keypad and LCD to find the entered user
 		{			
-			for(char i = 0; i<LOGIN_SIZE; i++)
+			for(int i = 0; i<LOGIN_SIZE; i++) //reads the users and stores in a temporarily array 
 			{
 				EEPROM_readByte(LCD_User_Username_Block,(4*looping_counter)+i,&username_temp_arr[i]);
 				_delay_ms(10);
@@ -107,7 +107,7 @@ ISR(INT0_vect)
 			}
 			
 			
-			if((Compare_Passwords(username_arr,username_temp_arr,LOGIN_SIZE) == '1') && (Compare_Passwords(password_arr,password_temp_arr,LOGIN_SIZE) == '1'))
+			if((Compare_Passwords(username_arr,username_temp_arr,LOGIN_SIZE) == '1') && (Compare_Passwords(password_arr,password_temp_arr,LOGIN_SIZE) == '1')) //compares the username and password
 			{
 				LCD_Write_String("Access Granted");
 				_delay_ms(500);
@@ -117,7 +117,7 @@ ISR(INT0_vect)
 			}
 		}
 
-		if(Compare_Var == 0)
+		if(Compare_Var == 0) //Entered user is not found and the allowable trials decreases by 1
 		{
 			trials--;
 			
@@ -148,7 +148,7 @@ ISR(INT0_vect)
 
 
 
-void App_Initialization()
+void App_Initialization() //This function contains intilizations for different peripherals
 {
 	LCD_Init();
 	Keypad_Init();
@@ -184,11 +184,11 @@ void App()
 	
 	
 	
-	Mode = UART_Mode_Choice();
+	Mode = UART_Mode_Choice(); //Checks either admin or user
 	
 	if(Mode == '1')		// Admin Selection
 	{
-		EEPROM_readByte(Counters_Block,Admins_number_BIT,&admin_counter);
+		EEPROM_readByte(Counters_Block,Admins_number_BIT,&admin_counter); //Reads the number of present admins NOW
 		_delay_ms(10);
 		trials = 3;
 		while(trials>=1 && trials<=3)
@@ -228,12 +228,13 @@ void App()
 				looping_counter = 0;
 				UART_Transmit('\r');	
 				
-				
-			EEPROM_readDatastream(Main_Admin_Block,0,username_temp_arr,LOGIN_SIZE);
-			_delay_ms(10);
-			EEPROM_readDatastream(Main_Admin_Block,8,password_temp_arr,LOGIN_SIZE);
-			_delay_ms(10);
-			
+				for(char i = 0 ; i < LOGIN_SIZE ; i++)
+				{
+					EEPROM_readByte(Main_Admin_Block , Main_Admin_Username_Starting_bit+i , &username_temp_arr[i]);
+					_delay_ms(10);
+					EEPROM_readByte(Main_Admin_Block , Main_Admin_Password_Starting_bit+i , &password_temp_arr[i]);
+					_delay_ms(10);
+				}			
 			if((Compare_Passwords(username_arr,username_temp_arr,LOGIN_SIZE) == '1') && (Compare_Passwords(password_arr,password_temp_arr,LOGIN_SIZE) == '1'))	// The loggedin admin is the main admin
 			{
 				UART_Transmit('\r');
@@ -243,11 +244,12 @@ void App()
 				UART_Transmit('\r');
 				Compare_Var = 1;
 			}
-			else
+			else //This condition means that the entered value is not main admin 
+				// Next step is to check if the entered values matches any stored admin or not
 			{
 				for (looping_counter = 0; looping_counter < admin_counter; looping_counter++)
 				{
-					for(char i = 0; i<LOGIN_SIZE; i++)
+					for(int i = 0; i<LOGIN_SIZE; i++)
 					{
 						EEPROM_readByte(Admin_Username_Block,(4*looping_counter)+i,&username_temp_arr[i]);
 						_delay_ms(10);
@@ -294,7 +296,7 @@ void App()
 		UART_Admin_Interfacing();
 	
 	}
-	else		// User
+	else //User
 	{
 		
 			EEPROM_readByte(Counters_Block,Users_UART_number_BIT,&user_counter);
@@ -346,7 +348,7 @@ void App()
 				
 				for (looping_counter = 0; looping_counter < user_counter; looping_counter++)
 				{
-					for(char i = 0; i<LOGIN_SIZE; i++)
+					for(int i = 0; i<LOGIN_SIZE; i++)
 					{
 						EEPROM_readByte(UART_User_Username_Block,(4*looping_counter)+i,&username_temp_arr[i]);
 						_delay_ms(10);

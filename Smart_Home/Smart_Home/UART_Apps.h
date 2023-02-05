@@ -5,7 +5,6 @@
 void UART_Display_LED (unsigned char room, unsigned char status);
 void UART_Welcome_Message();
 unsigned char UART_Mode_Choice();
-unsigned char UART_User_Type();
 void LCD_Display_LED (unsigned char room, unsigned char status);
 void UART_Rooms_Leds_Control();
 void UART_Admin_Interfacing();

@@ -7,7 +7,7 @@
 
 char arr[4][4] = {{'7','8','9','/'},{'4','5','6','*'},{'1','2','3','-'},{'C','0','=','+'}};
 
-void Keypad_Init(void)
+void Keypad_Init(void) 
 {	
 	clear_bit(Keypad_Input_Port_Dir,input_pin_1);
 	clear_bit(Keypad_Input_Port_Dir,input_pin_2);
@@ -36,7 +36,7 @@ unsigned char Keypad_Get_Value()
 {
 	unsigned char Value = 0;
 	
-	for(unsigned char i = output_pin_1; i <= output_pin_4; i++)
+	for(unsigned int i = output_pin_1; i <= output_pin_4; i++)
 	{
 		clear_bit(Keypad_Output_Write_Port, i);
 		for(unsigned char j = input_pin_1; j <= input_pin_4; j++)

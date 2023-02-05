@@ -137,7 +137,7 @@ void LCD_Write_String (char* text)
 	}
 }
 
-LCD_Set_Cursor(char row, char pos)
+void LCD_Set_Cursor(char row, char pos)
 {
 	char address = 0;
 	if (row < 2 && pos<16)
@@ -194,7 +194,7 @@ void LCD_Write_Decimal(float data)
 	LCD_Write_Integer(num);
 	LCD_Write_Char('.');
 	data -= num;
-	for(unsigned char i = 0; i < 3; i++)
+	for(unsigned int i = 0; i < 3; i++)
 	{
 		data *= 10;
 		num = data;

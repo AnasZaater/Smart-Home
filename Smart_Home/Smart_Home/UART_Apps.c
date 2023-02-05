@@ -15,94 +15,6 @@
 #include "App.h"
 #include "Servo.h"
 
-/*
-void UART_Display_LED (unsigned char room, unsigned char status)
-{
-	switch(room)
-	{
-		case '1':
-		switch(status)
-		{
-			case '1':
-			UART_Send_String("Room 1 Led is Turned On");
-			UART_Transmit('\r');
-			UART_Transmit('\r');
-			break;
-			case '0':
-			UART_Send_String("Room 1 Led is Turned Off");
-			UART_Transmit('\r');
-			UART_Transmit('\r');
-			break;
-		}
-		break;
-		
-		case '2':
-		switch(status)
-		{
-			case '1':
-			UART_Send_String("Room 2 Led is Turned On");
-			UART_Transmit('\r');
-			UART_Transmit('\r');
-			break;
-			case '0':
-			UART_Send_String("Room 2 Led is Turned Off");
-			UART_Transmit('\r');
-			UART_Transmit('\r');
-			break;
-		}
-		break;
-		
-		case '3':
-		switch(status)
-		{
-			case '1':
-			UART_Send_String("Room 3 Led is Turned On");
-			UART_Transmit('\r');
-			UART_Transmit('\r');
-			break;
-			case '0':
-			UART_Send_String("Room 3 Led is Turned Off");
-			UART_Transmit('\r');
-			UART_Transmit('\r');
-			break;
-		}
-		break;
-		
-		case '4':
-		switch(status)
-		{
-			case '1':
-			UART_Send_String("Room 4 Led is Turned On");
-			UART_Transmit('\r');
-			UART_Transmit('\r');
-			break;
-			case '0':
-			UART_Send_String("Room 4 Led is Turned Off");
-			UART_Transmit('\r');
-			UART_Transmit('\r');
-			break;
-		}
-		break;
-		
-		case '5':
-		switch(status)
-		{
-			case '1':
-			UART_Send_String("Room 5 Led is Turned On");
-			UART_Transmit('\r');
-			UART_Transmit('\r');
-			break;
-			case '0':
-			UART_Send_String("Room 5 Led is Turned On");
-			UART_Transmit('\r');
-			UART_Transmit('\r');
-			break;
-		}
-		break;
-	}
-}*/
-
-
 void UART_Welcome_Message()
 {
 	UART_Send_String ("Welcome to Smart Home System");
@@ -153,50 +65,6 @@ unsigned char UART_Mode_Choice()
 	
 	return uart_var;
 }
-
-
-//unsigned char UART_User_Type()
-//{
-	//unsigned char uart_var = 0;
-	//
-	//UART_Send_String ("Please choose user type ");
-	//UART_Transmit('\r');
-	//UART_Send_String ("1. Remote User (using UART)");
-	//UART_Transmit('\r');
-	//UART_Send_String ("2. User of LCD & Keypad System");
-	//UART_Transmit('\r');
-	//UART_Transmit('\r');
-	//_delay_ms(300);
-	//
-	//UART_Send_String ("Your Choice : ");
-	//while(!(uart_var >= Ascii_0	&& uart_var <= Ascii_9))
-	//{
-		//uart_var = UART_Receive();
-		//UART_Transmit(uart_var);
-		//UART_Transmit('\r');
-		//UART_Transmit('\r');
-	//}
-	//
-	//while (!((uart_var >= Ascii_1) && (uart_var <= Ascii_2)))
-	//{
-		//UART_Send_String ("Please Choose only 1 or 2");
-		//UART_Transmit('\r');
-		//UART_Transmit('\r');
-		//uart_var = 0;
-		//UART_Send_String("Your choice : ");
-		//while(!(uart_var >= Ascii_0	&& uart_var <= Ascii_9))
-		//{
-			//uart_var = UART_Receive();
-			//UART_Transmit(uart_var);
-			//UART_Transmit('\r');
-			//UART_Transmit('\r');
-		//}
-	//}
-	//
-	//return uart_var;
-//}
-
-
 
 void UART_Rooms_Leds_Control()
 {
@@ -324,7 +192,6 @@ void UART_Rooms_Leds_Control()
 	else
 	{
 		LED_STAT(room_on_off_temp,room_no_temp);
-		//UART_Display_LED (room_no_temp, room_on_off_temp);
 		LCD_Display_LED (room_no_temp, room_on_off_temp);	
 	}
 	
@@ -532,23 +399,17 @@ void UART_Admin_Interfacing()
 					
 					EEPROM_readByte(Counters_Block,Admins_number_BIT,&admin_counter);
 					_delay_ms(10);
-					
-					/*for(unsigned char i = 4*admin_counter ; i < 4*(admin_counter+1) ; i++)
-					{
-						EEPROM_writeByte(Admin_Username_Block,i,username_arr[looping_counter]);
-						_delay_ms(1);
-					
-						EEPROM_writeByte(Admin_Password_Block,i,password_arr[looping_counter]);
-						_delay_ms(1);
-					}*/
 				
-					EEPROM_writeDataStream(Admin_Username_Block,LOGIN_SIZE*admin_counter,username_arr,LOGIN_SIZE);
-					_delay_ms(200);
-					EEPROM_writeDataStream(Admin_Password_Block,LOGIN_SIZE*admin_counter,password_arr,LOGIN_SIZE);
-					_delay_ms(200);
+					for(char i = 0; i < LOGIN_SIZE; i++)
+					{
+						EEPROM_writeByte(Admin_Username_Block, (4*admin_counter)+i, username_arr[i]);
+						_delay_ms(10);
+						EEPROM_writeByte(Admin_Password_Block, (4*admin_counter)+i, password_arr[i]);
+						_delay_ms(10);
+					}
 					admin_counter++;
 					EEPROM_writeByte(Counters_Block,Admins_number_BIT,admin_counter);
-					_delay_ms(200);		
+					_delay_ms(10);		
 				
 					UART_Send_String("The admin is added successfully");
 					UART_Transmit('\r');
@@ -656,25 +517,17 @@ void UART_Admin_Interfacing()
 					
 					EEPROM_readByte(Counters_Block,Users_UART_number_BIT,&user_counter);
 					_delay_ms(10);
-				
-					/*for(unsigned char i = 4*admin_counter ; i < 4*(admin_counter+1) ; i++)
+					
+					for(char i = 0; i < LOGIN_SIZE; i++)
 					{
-					EEPROM_writeByte(BLOCK_1,i,username_arr[looping_counter]);
-					_delay_ms(10);
-					
-					EEPROM_writeByte(BLOCK_2,i,password_arr[looping_counter]);
-					_delay_ms(10);
-					}*/
-					
-					//84
-				
-					EEPROM_writeDataStream(UART_User_Username_Block,(LOGIN_SIZE*user_counter),username_arr,LOGIN_SIZE);
-					_delay_ms(200);
-					EEPROM_writeDataStream(UART_User_Password_Block,(LOGIN_SIZE*user_counter),password_arr,LOGIN_SIZE);
-					_delay_ms(200);
+						EEPROM_writeByte(UART_User_Username_Block, (4*user_counter)+i, username_arr[i]);
+						_delay_ms(10);
+						EEPROM_writeByte(UART_User_Password_Block, (4*user_counter)+i, password_arr[i]);
+						_delay_ms(10);
+					}
 					user_counter++;
 					EEPROM_writeByte(Counters_Block,Users_UART_number_BIT,user_counter);
-					_delay_ms(200);		
+					_delay_ms(10);		
 				
 					UART_Send_String("The user is added successfully");
 					UART_Transmit('\r');
@@ -744,20 +597,14 @@ void UART_Admin_Interfacing()
 					
 					EEPROM_readByte(Counters_Block,Users_LCD_number_BIT,&user_counter);
 					_delay_ms(10);
-				
-					/*for(unsigned char i = 4*admin_counter ; i < 4*(admin_counter+1) ; i++)
-					{
-					EEPROM_writeByte(BLOCK_1,i,username_arr[looping_counter]);
-					_delay_ms(10);
 					
-					EEPROM_writeByte(BLOCK_2,i,password_arr[looping_counter]);
-					_delay_ms(10);
-					}*/
-				
-					EEPROM_writeDataStream(LCD_User_Username_Block,(LOGIN_SIZE*user_counter),username_arr,LOGIN_SIZE);
-					_delay_ms(200);
-					EEPROM_writeDataStream(LCD_User_Password_Block,(LOGIN_SIZE*user_counter),password_arr,LOGIN_SIZE);
-					_delay_ms(200);
+					for(char i = 0; i < LOGIN_SIZE; i++)
+					{
+						EEPROM_writeByte(LCD_User_Username_Block, (4*user_counter)+i, username_arr[i]);
+						_delay_ms(10);
+						EEPROM_writeByte(LCD_User_Password_Block, (4*user_counter)+i, password_arr[i]);
+						_delay_ms(10);
+					}
 					user_counter++;
 					EEPROM_writeByte(Counters_Block,Users_LCD_number_BIT,user_counter);
 					_delay_ms(10);		
@@ -872,7 +719,7 @@ void UART_Admin_Interfacing()
 					
 					if((Compare_Passwords(username_arr,username_temp_arr,LOGIN_SIZE) == '1') && (Compare_Passwords(password_arr,password_temp_arr,LOGIN_SIZE) == '1'))
 					{
-						for(unsigned char counter = looping_counter; counter < user_counter-1; counter++)
+						for(char counter = looping_counter; counter < user_counter-1; counter++)
 						{
 							for(char i = 0; i<LOGIN_SIZE; i++)
 							{
@@ -880,28 +727,29 @@ void UART_Admin_Interfacing()
 								_delay_ms(10);
 								EEPROM_readByte(UART_User_Password_Block,4*(counter+1)+i,&password_arr_2[i]);
 								_delay_ms(10);
-							}
 								
-							EEPROM_writeDataStream(UART_User_Username_Block,4*(counter),username_arr_2,LOGIN_SIZE);
-							_delay_ms(200);
-							EEPROM_writeDataStream(UART_User_Password_Block,4*(counter),password_arr_2,LOGIN_SIZE);
-							_delay_ms(200);
+								EEPROM_writeByte(UART_User_Username_Block , 4*(counter)+i , username_arr_2[i]);
+								_delay_ms(10);
+								EEPROM_writeByte(UART_User_Password_Block , 4*(counter)+i , password_arr_2[i]);
+								_delay_ms(10);
+							
+							}
 						}						
 						
 						UART_Send_String("The user is deleted successfully");
 						UART_Transmit('\r');
 						
-						for(unsigned char i = 0; i < LOGIN_SIZE; i++)
+						for(char i = 0; i < LOGIN_SIZE; i++)
 						{
 							EEPROM_writeByte(UART_User_Username_Block, 4*(user_counter-1)+i, 0xFF);
-							_delay_ms(200);
+							_delay_ms(10);
 							EEPROM_writeByte(UART_User_Password_Block, 4*(user_counter-1)+i, 0xFF);
-							_delay_ms(200);
+							_delay_ms(10);
 						}
 						
 						user_counter--;
 						EEPROM_writeByte(Counters_Block,Users_UART_number_BIT,user_counter);
-						_delay_ms(200);
+						_delay_ms(10);
 						
 						Compare_Var = 1;
 						break;
@@ -944,28 +792,27 @@ void UART_Admin_Interfacing()
 								_delay_ms(10);
 								EEPROM_readByte(LCD_User_Password_Block,4*(counter+1)+i,&password_arr_2[i]);
 								_delay_ms(10);
+								
+								EEPROM_writeByte(LCD_User_Username_Block , 4*(counter)+i , username_arr_2[i]);
+								_delay_ms(10);
+								EEPROM_writeByte(LCD_User_Password_Block , 4*(counter)+i , password_arr_2[i]);
+								_delay_ms(10);
 							}
-							
-							
-							EEPROM_writeDataStream(LCD_User_Username_Block,4*(counter),username_arr_2,LOGIN_SIZE);
-							_delay_ms(200);
-							EEPROM_writeDataStream(LCD_User_Password_Block,4*(counter),password_arr_2,LOGIN_SIZE);
-							_delay_ms(200);
 						}
 						UART_Send_String("The user is deleted successfully");
 						UART_Transmit('\r');
 						
-						for(unsigned char i = 0; i < LOGIN_SIZE; i++)
+						for(char i = 0; i < LOGIN_SIZE; i++)
 						{
 							EEPROM_writeByte(LCD_User_Username_Block, 4*(user_counter-1)+i, 0xFF);
-							_delay_ms(200);
+							_delay_ms(10);
 							EEPROM_writeByte(LCD_User_Password_Block, 4*(user_counter-1)+i, 0xFF);
-							_delay_ms(200);
+							_delay_ms(10);
 						}
 						
 						user_counter--;
 						EEPROM_writeByte(Counters_Block,Users_LCD_number_BIT,user_counter);
-						_delay_ms(200);
+						_delay_ms(10);
 						
 						Compare_Var = 1;
 						break;

@@ -51,7 +51,6 @@
 
 void EEPROM_Initialization();	//Initializing I2C communication with 100KHz
 void EEPROM_writeByte(char EEPROM_Block,char EEPROM_Address,char Data); //writing a data byte in a specific eeprom block
-void EEPROM_writeDataStream(char EEPROM_Block,char EEPROM_Address,char *Data,char DataSize);//writing a stream of data bytes in a specific eeprom block (max 16 bytes)
 void EEPROM_readByte(char EEPROM_Block,char EEPROM_Address,char *Data); // reading a data byte from a specific eeprom block
 void EEPROM_readDatastream(char EEPROM_Block,char EEPROM_Address,char *Data,char DataSize); // reading a stream of data bytes from a specific eeprom block
 

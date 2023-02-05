@@ -6,14 +6,13 @@
 #include "I2C_Master.h"
 #include <util/delay.h>
 
-void EEPROM_Initialization(void)
+void EEPROM_Initialization(void) //Initialize EEPROM --> starting I2C communication
 {
 	I2C_Initialization();
 }
 
-void EEPROM_writeByte(char EEPROM_Block,char EEPROM_Address,char Data)
+void EEPROM_writeByte(char EEPROM_Block,char EEPROM_Address,char Data) //Writes a byte in an EEPROM block
 {
-	//I2C_START_Transmitter_Receiver_Mode(EEPROM_Block,Master_Transmitter_Mode);
 	I2C_Start(EEPROM_Block);
 	I2C_Write(EEPROM_Address);
 	_delay_ms(10);
@@ -22,47 +21,17 @@ void EEPROM_writeByte(char EEPROM_Block,char EEPROM_Address,char Data)
 	I2C_Stop();
 }
 
-void EEPROM_readByte(char EEPROM_Block,char EEPROM_Address,char *Data)
+void EEPROM_readByte(char EEPROM_Block,char EEPROM_Address,char *Data) //Reads a byte in an EEPROM
 {
-	//I2C_START_Transmitter_Receiver_Mode(EEPROM_Block,Master_Transmitter_Mode);
 	I2C_Start(EEPROM_Block);
 	I2C_Write(EEPROM_Address);
-	//I2C_Repeated_START_Transmitter_Receiver_Mode(EEPROM_Block+1,Master_Receiver_Mode);
 	I2C_Repeated_Start(EEPROM_Block+1);
 	*Data = I2C_Read_Nack();
 	_delay_ms(10);
 	I2C_Stop();
 }
 
-
-void EEPROM_writeDataStream(char EEPROM_Block,char EEPROM_Address,char *Data,char DataSize)
-{
-	char loopingVar;
-	//Checking if the write  size is more than page size or not
-	if (DataSize > EEPROM_PAGE_SIZE)
-	{
-		loopingVar = EEPROM_PAGE_SIZE ;//setting the page size as default
-	}
-	else
-	{
-		loopingVar = DataSize;
-	}
-	
-	I2C_Start(EEPROM_Block);
-	I2C_Write(EEPROM_Address);
-	_delay_ms(10);
-	
-	while(loopingVar)
-	{
-		I2C_Write(*Data);
-		Data++;
-		loopingVar--;
-	}
-	_delay_ms(10);
-	I2C_Stop();
-}
-
-void EEPROM_readDatastream(char EEPROM_Block,char EEPROM_Address,char *Data,char DataSize)
+void EEPROM_readDatastream(char EEPROM_Block,char EEPROM_Address,char *Data,char DataSize) //Reads an array of data in EEPROM and stores it in an array
 {
 	I2C_Start(EEPROM_Block);
 	I2C_Write(EEPROM_Address);

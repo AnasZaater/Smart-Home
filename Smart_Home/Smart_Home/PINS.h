@@ -1,4 +1,4 @@
-
+//This .h file contains the PINS used throughout the project
 /* -------------------- LCD -------------------*/
 
 // LCD Control Pins 

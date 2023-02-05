@@ -59,13 +59,13 @@
 
 
 
-void LCD_Send_CMD (unsigned char data);
-void LCD_Write_Char (unsigned char data);
-void LCD_Init();
-void LCD_Write_String(char* text);
-void LCD_Set_Cursor(char row, char pos);
-void LCD_Clear_Screen();
-void LCD_Write_Integer(unsigned long int data);
-void LCD_Write_Decimal(float data);
+void LCD_Send_CMD (unsigned char data);//Sends a command on LCD
+void LCD_Write_Char (unsigned char data);//Writes a character which is passed as an argument
+void LCD_Init(); //Initialize LCD connection
+void LCD_Write_String(char* text); //Writes a stream of characters
+void LCD_Set_Cursor(char row, char pos);//Controls the position of the cursor
+void LCD_Clear_Screen();//Clears the screen to write other data on it
+void LCD_Write_Integer(unsigned long int data);//Writes integer instead of character
+void LCD_Write_Decimal(float data);//Writes floating point data on LCD
 
 #endif /* LCD_H_ */
