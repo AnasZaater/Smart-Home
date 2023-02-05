@@ -52,6 +52,7 @@ ISR(INT0_vect) // LCD and Keypad interfacing
 				while(!(Keypad_Value >= Ascii_0	&& Keypad_Value <= Ascii_9)) //Storing the written values by user
 				{
 					Keypad_Value = Keypad_Get_Value();
+					AC_ON();
 				}
 				
 				username_arr[looping_counter] = Keypad_Value;
@@ -78,6 +79,7 @@ ISR(INT0_vect) // LCD and Keypad interfacing
 				while(!(Keypad_Value >= Ascii_0	&& Keypad_Value <= Ascii_9))
 				{
 					Keypad_Value = Keypad_Get_Value();
+					AC_ON();
 				}
 				
 				password_arr[looping_counter] = Keypad_Value;

@@ -290,6 +290,7 @@ void LCD_User_Interfacing()
 		while(!(Keypad_Value >= Ascii_0	&& Keypad_Value <= Ascii_9))
 		{
 			Keypad_Value = Keypad_Get_Value();
+			AC_ON();
 		}
 		
 		LCD_Write_Char(Keypad_Value);
@@ -298,6 +299,7 @@ void LCD_User_Interfacing()
 		
 		while (!((Keypad_Value >= Ascii_1) && (Keypad_Value <= Ascii_4)))
 		{
+			
 			LCD_Send_CMD(Display_ON_Cusror_ON_Blink_OFF);
 			LCD_Write_String ("Please Choose");
 			LCD_Send_CMD(Row_2_pos_0);
@@ -313,6 +315,7 @@ void LCD_User_Interfacing()
 			while(!(Keypad_Value >= Ascii_0	&& Keypad_Value <= Ascii_9))
 			{
 				Keypad_Value = Keypad_Get_Value();
+				AC_ON();
 			}
 			
 			LCD_Write_Char(Keypad_Value);
@@ -362,6 +365,7 @@ void LCD_User_Interfacing()
 			while(!(Keypad_Value >= Ascii_0	&& Keypad_Value <= Ascii_9))
 			{
 				Keypad_Value = Keypad_Get_Value();
+				AC_ON();
 			}
 			
 			LCD_Write_Char(Keypad_Value);
@@ -385,6 +389,7 @@ void LCD_User_Interfacing()
 				while(!(Keypad_Value >= Ascii_0	&& Keypad_Value <= Ascii_9))
 				{
 					Keypad_Value = Keypad_Get_Value();
+					AC_ON();
 				}
 				
 				LCD_Write_Char(Keypad_Value);
